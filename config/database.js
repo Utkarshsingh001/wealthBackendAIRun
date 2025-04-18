@@ -1,16 +1,15 @@
 import Sequelize from 'sequelize';
-import secret from '../constants/secret.js';
+import { secrets } from '../constants/secrets.js';
 
-console.log(secret.DB)
 const sequelize = new Sequelize(
-  secret.DB.NAME,
-  secret.DB.USERNAME,
-  secret.DB.PASSWORD,
+  secrets.DB.NAME,
+  secrets.DB.USERNAME,
+  secrets.DB.PASSWORD,
   {
-    host: secret.DB.HOST,
-    port: secret.DB.PORT,
+    host: secrets.DB.HOST,
+    port: secrets.DB.PORT,
     dialect: 'postgres',
-    logging: true,
+    logging: false,
   }
 );
 

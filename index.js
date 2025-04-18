@@ -2,10 +2,14 @@ import express from "express";
 import sequelize from "./config/database.js";
 import db from "./models/index.js";
 
+import { router as apiRouter } from "./routes/index.js";
+import { responseHandlers, errorHandler } from "./middlewares/responseHandlers.js";
+
 const app = express();
 app.use(express.json());
-
-
+app.use(responseHandlers);
+app.use(errorHandler);
+app.use("/",apiRouter);
 
 (async () => {
   try {

@@ -1,6 +1,8 @@
 import dotenv from "dotenv";
 dotenv.config();
-export default {
+export const secrets = {
+    ENV : process.env.NODE_ENV,
+    PORT : process.env.PORT,
     DB : {
         NAME : process.env.DB_NAME,
         HOST : process.env.DB_HOST,
