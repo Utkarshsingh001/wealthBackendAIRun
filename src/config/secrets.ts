@@ -14,4 +14,6 @@ export const secrets = {
   PORT: parseInt(requireEnv('PORT'), 10),
   MODE: requireEnv('MODE'),
   DB: requireEnv('DATABASE_URL'),
+  REDIS_HOST: requireEnv('REDIS_HOST'),
+  REDIS_PORT: parseInt(requireEnv('REDIS_PORT')),
 };
