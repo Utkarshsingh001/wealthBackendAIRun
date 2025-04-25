@@ -1,0 +1,13 @@
+export const firebaseServiceAccount = {
+  "type": "service_account",
+    "project_id": "wealth-dev-df480",
+    "private_key_id": "85e5228bc4440af7844c82579e3fa0b9a5f6a716",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDBvChJ+ltsJNS6\nRBO4IYGndHC28XOJNdBg5PglG+SxxabEv/+Z5i1L3NqGMmVzBYL6pgqtKjpxH4Xp\nzLtCF/l1kqkRfbsC0Fop0OMk79n3Ii5klHvQ0jDSMnjYrjzAFC+zNMjvZvZVFO/J\n/QfzSV8uT6qGZPhWdZQpdxX/86dHgyXm7C2cD4s6U37/5jQG8/KKlNkBGG1N6Tj8\nwp9fqQKyp7DlMP2S1Aw963Jn5GZATC9JW/Gj3ezxekoLIHTlYOypMl3Li7/zmdH6\nmp02oR6MTzRY+aXLbzM84/iyOMVZnvjTL//FBvkRDjEHlTXKzYEfEJ9kKPIWGdpn\nRctymz9ZAgMBAAECggEAJS5pFg+WMapc6FWt6ioGEd8LTdUHnTcGg74V8LtKeCLM\nl5iYo8709QkRKG2uIjXV1ih9RpAi8LiB0SXxb2UeA4ZO69QzSr41e66DFYDx1lgJ\nStTjcWeRppm4ry87agrFv9E62hVq49fVkHC/MJ4thfwUqF/i+Gbu9UlNX9bBjTvl\nD7LWEzY07pVS78zK+aTK+JdXbN0uVfzquxUf5fyTWrc3JTEDThjBeO4FBSXUjD19\n2m41TYAo4hCf7/5NaBngV7vXNJzHej6Khq88INdKDtzxmr61zJiSkAYZ66Qok8uq\n38aiVvkyxkpf4h8gNv4CDsAzBZC23lvH7kbUH57ELQKBgQDjLtR2t+oay74y7vqy\n6RPW3CU5wbTtGLfWzNH5Trh2jfUZvZejqQRebGD6p5p5Cov5vm3ULPW2QtAqi6nE\nHcWsBm9f9RomVkPUym1kPvEXZQqs9uClhU8OSNm63ajDzpgdtM2QV2MSBTzasTEz\n9TQ1c3TbHLerlinNpj/smuB/zQKBgQDaTzF7OWaiH700ZH8bUgkl/3JF02qzrEpw\ncJNAnhIWhnlUOCXxQk0v08JzaZYZrkMzpXWkxlT4IwUKqKDruaIXpZozEV9LoUtU\nGQOmQOpt0rG10hswK1+mGUc/NE7zvUOgs1NQv5j3uyjET+M2079IwSmeidnP0prm\ni123wUl5vQKBgQCQQ7+1t+qYo4MfcvSOQkZP7bJR7/lFiqnLZHt+Noga+OCJPQUb\nb4wPrgETivUkIhdrO4sg7oAGAn2QVuoyWLmbGOcG5214pNUkPnui6flNYuOZnJhh\nY7slFgv1hybRWNLuIk9bdrK50cuoEFdvaCmEO9IcBit4cb4QEp+LT3p6jQKBgBVO\nPUoFZBrWdiSy2iTUcMggkgp2g6ddXTZ0Bir8Qk+oeBbcE/fjvJy6UfPpjhibhTt5\nHm4iXRCKemd75Zib2VHte4sYWvCKoUtn1Y9YLojhUy6nfrfIw+D1/poQhNQM2JjK\nZ4st58PlpCjkkww6xiRXlbQ/R96cczmkyFSyrHURAoGARdwXIlfNBFC0diOL62c6\no64lAHh4xefw35brTgtqhgyA7eR9CfWTvCFFJQnZPJsoiRkq8ktkGdIKOyUU2s+u\nqWVT8F4qudnKEIElMbTa6uFHOPWhIA7nRWCQa/BYNTfjJww5mjbM0AtiqhCJfyPE\n45glvQloa2pqKfCRSSXuWi8=\n-----END PRIVATE KEY-----\n",
+    "client_email": "firebase-adminsdk-fbsvc@wealth-dev-df480.iam.gserviceaccount.com",
+    "client_id": "108187330744841529689",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40wealth-dev-df480.iam.gserviceaccount.com",
+    "universe_domain": "googleapis.com"
+};
