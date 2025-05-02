@@ -16,4 +16,5 @@ export const secrets = {
   DB: requireEnv('DATABASE_URL'),
   REDIS_HOST: requireEnv('REDIS_HOST'),
   REDIS_PORT: parseInt(requireEnv('REDIS_PORT')),
+  JWT_SECRET: requireEnv('JWT_SECRET'),
 };

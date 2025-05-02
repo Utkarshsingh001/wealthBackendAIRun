@@ -5,6 +5,7 @@
 
 # Prisma generated files
 /prisma/generated
+/prisma/schema/migrations
 
 # Logs
 logs

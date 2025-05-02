@@ -1,0 +1,38 @@
+model Goals {
+    id                   String         @id @default(cuid())
+    name                 String
+    description          String?        @db.Text
+    targetAmount         Float
+    targetDate           DateTime
+    currencyId           String
+    userId               String
+    status               GoalStatus
+    priority             GoalPriority
+    isAllowedBacklog     Boolean        @default(false)
+    recurringYearlySpend Float          @default(0)
+    recurrenceType       RecurrenceType @default(ONCE)
+    createdAt            DateTime       @default(now())
+    updatedAt            DateTime       @updatedAt
+    currency             Currency       @relation(fields: [currencyId], references: [id])
+    user                 User           @relation(fields: [userId], references: [id])
+    assets               Asset[]
+}
+
+enum GoalStatus {
+    PENDING
+    IN_PROGRESS
+    COMPLETED
+    CANCELLED
+}
+
+enum GoalPriority {
+    LOW
+    MEDIUM
+    HIGH
+}
+
+enum RecurrenceType {
+    ONCE
+    BI_YEARLY
+    YEARLY
+}

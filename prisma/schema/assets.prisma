@@ -1,0 +1,93 @@
+// global asset types
+
+model GlobalAssetType {
+    id          String           @id @default(uuid())
+    name        String           @unique
+    description String?
+    fields      AssetTypeField[] @relation("AssetTypeField")
+    createdAt   DateTime         @default(now())
+    updatedAt   DateTime?        @updatedAt
+    assets      Asset[]          @relation("GlobalAsset")
+    // userId      String
+}
+
+// user asset types
+model UserAssetType {
+    id          String    @id @default(uuid())
+    name        String    @unique
+    description String?
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime? @updatedAt
+    userId      String
+    user        User      @relation(fields: [userId], references: [id])
+    assets      Asset[]   @relation("UserAsset")
+}
+
+model Asset {
+    id                  String    @id @default(uuid())
+    name                String
+    description         String?
+    typeId              String?
+    userId              String
+    initialValue        Float     @default(0.00)
+    monthlyContribution Float     @default(0.00)
+    startDate           DateTime
+    endDate             DateTime?
+    rateOfInterest      Float     @default(0.00)
+    riskLevel           RiskLevel @default(MEDIUM)
+    linekedGoalId       String?
+    isLinkedGoal        Boolean   @default(false)
+    currentValue        Float     @default(0.00)
+    currencyId          String
+    createdAt           DateTime  @default(now())
+    updatedAt           DateTime? @updatedAt
+
+    // Relations for type
+    currency    Currency         @relation(fields: [currencyId], references: [id])
+    globalType  GlobalAssetType? @relation("GlobalAsset", fields: [typeId], references: [id], map: "Asset_globalType_fkey")
+    userType    UserAssetType?   @relation("UserAsset", fields: [typeId], references: [id], map: "Asset_userType_fkey")
+    user        User             @relation(fields: [userId], references: [id])
+    linekedGoal Goals?           @relation(fields: [linekedGoalId], references: [id], map: "Asset_linekedGoal_fkey")
+    rule        Rules[]
+
+    @@unique([typeId, userId])
+    @@index([typeId])
+    @@index([userId])
+}
+
+model AssetTypeField {
+    id           String          @id @default(uuid())
+    fieldName    String
+    fieldType    FieldType
+    isRequired   Boolean         @default(false)
+    enumOptions  String[]        @default([])
+    validation   Json?
+    defaultValue Json?
+    permission   FieldPermission @default(EDITABLE)
+    assetTypeId  String
+    assetType    GlobalAssetType @relation("AssetTypeField", fields: [assetTypeId], references: [id])
+    createdAt    DateTime        @default(now())
+    updatedAt    DateTime?       @updatedAt
+}
+
+enum RiskLevel {
+    LOW
+    MEDIUM
+    HIGH
+}
+
+enum FieldType {
+    TEXT
+    NUMBER
+    CURRENCY
+    SELECT
+    CHECKBOX
+    RADIO
+    DATE
+}
+
+enum FieldPermission {
+    READONLY
+    EDITABLE
+    HIDDEN
+}

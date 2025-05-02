@@ -1,0 +1,46 @@
+model RuleAction { //like increase, decrease, etc
+    id          String       @id @default(uuid())
+    actionText  String       @db.Text
+    rules Rules[]
+}
+
+model Rules {
+    id                      String        @id @default(uuid())
+    ruleFor                 RuleFor
+    ruleText                String?        @db.Text
+    actionId                String
+    action                  RuleAction    @relation(fields: [actionId], references: [id])
+    amountType              AmountType
+    amountValue             Float         @default(0.00)
+    conditionText           String?       @db.Text //rule trigger condition
+    affectiveDate           DateTime
+    isRecurring            Boolean      @default(false)
+    frequency               RuleFrequency
+    userId                 String?
+    currencyId           String?   
+
+    createdAt DateTime  @default(now())
+    updatedAt DateTime? @updatedAt
+    assets   Asset[]
+    liabilities Liability[]
+    currency               Currency?     @relation(fields: [currencyId], references: [id])
+    user     User?     @relation(fields: [userId], references: [id])
+}
+
+enum RuleFor {
+    ASSET
+    LIABILITY
+    BOTH
+}
+
+enum AmountType {
+    FIXED
+    PERCENTAGE
+    CONDITION
+}
+
+enum RuleFrequency {
+    WEEKLY
+    MONTHLY
+    YEARLY
+}

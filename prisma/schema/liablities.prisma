@@ -1,0 +1,47 @@
+model GlobalLiabilityType {
+    id          String      @id @default(uuid())
+    name        String      @unique
+    description String?
+    createdAt   DateTime    @default(now())
+    updatedAt   DateTime    @updatedAt
+    liabilities Liability[] @relation("GlobalLiability")
+}
+
+model UserLiabilityType {
+    id          String      @id @default(uuid())
+    name        String      @unique
+    description String?
+    createdAt   DateTime    @default(now())
+    updatedAt   DateTime    @updatedAt
+    userId      String
+    user        User        @relation(fields: [userId], references: [id])
+    liabilities Liability[] @relation("UserLiability")
+}
+
+model Liability {
+    id              String               @id @default(uuid())
+    name            String
+    description     String?
+    startDate       DateTime
+    endDate         DateTime?
+    principalAmount Float                @default(0.00)
+    tenure          Int
+    rateOfInterest  Float                @default(0.00)
+    monthlyPayment  Float                @default(0.00)
+    isReducible     Boolean              @default(false)
+    typeId          String?
+    userId          String
+    currentValue    Float
+    currencyId      String  
+    createdAt       DateTime             @default(now())
+    updatedAt       DateTime?            @updatedAt
+    // Relations for type
+    currency        Currency            @relation(fields: [currencyId], references: [id])
+    globalType      GlobalLiabilityType? @relation("GlobalLiability", fields: [typeId], references: [id], map: "Liability_globalType_fkey")
+    userType        UserLiabilityType?   @relation("UserLiability", fields: [typeId], references: [id], map: "Liability_userType_fkey")
+    user            User                 @relation(fields: [userId], references: [id])
+    rule            Rules[]
+    @@unique([typeId, userId])
+    @@index([typeId])
+    @@index([userId])
+}

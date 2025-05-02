@@ -16,4 +16,28 @@ export class UserService {
             data,
         });
     }
+
+    async updateUserProfile(userId: string, updateData: Partial<CreateUserDto>) {
+        return this.prisma.user.update({
+            where: { id: userId },
+            data: updateData,
+        });
+    }
+
+    async getUserById(userId: string) {
+        return this.prisma.user.findUnique({
+            where: { id: userId },
+        });
+    }
+
+    async getAllUsers() {
+        return this.prisma.user.findMany({
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                createdAt: true,
+            },
+        });
+    }
 }

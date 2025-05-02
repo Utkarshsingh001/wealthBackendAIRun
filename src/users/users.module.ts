@@ -6,10 +6,18 @@ import { PrismaModule } from '../prisma/prisma.module';
 import { Service } from './.service';
 import { FirebaseService } from 'src/firebase/firebase.service';
 import { RedisService } from 'src/redis/service/redis/redis.service';
+import { JwtModule } from '@nestjs/jwt';
+import { JwtService } from './services/jwt/jwt.service';
+import { secrets } from 'src/config/secrets';
 
 @Module({
-  imports: [PrismaModule],
+  imports: [
+    PrismaModule,
+    JwtModule.register({
+      secret: secrets.JWT_SECRET, // Replace with a secure key
+    }),
+  ],
   controllers: [UsersController, AuthController],
-  providers: [UserService, Service, FirebaseService, RedisService],
+  providers: [UserService, Service, FirebaseService, RedisService, JwtService],
 })
 export class UsersModule {}
