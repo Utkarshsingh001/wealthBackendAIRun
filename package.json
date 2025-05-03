@@ -22,15 +22,17 @@
 		"prisma:migrate": "npx prisma migrate dev",
 		"prisma:migrate:prod": "npx prisma migrate deploy",
 		"prisma:studio": "npx prisma studio",
-		"prisma:validate": "npx prisma validate"
+		"prisma:validate": "npx prisma validate",
+		"db:seed": "ts-node prisma/seed.ts"
 	},
 	"dependencies": {
 		"@nestjs/common": "^11.1.0",
 		"@nestjs/core": "^11.0.1",
-    "@nestjs/jwt": "^11.0.0",
-    "@nestjs/mapped-types": "*",
+		"@nestjs/jwt": "^11.0.0",
+		"@nestjs/mapped-types": "*",
 		"@nestjs/platform-express": "^11.0.1",
 		"@prisma/client": "^6.6.0",
+		"axios": "^1.9.0",
 		"class-validator": "^0.14.1",
 		"dotenv": "^16.5.0",
 		"firebase-admin": "^13.3.0",

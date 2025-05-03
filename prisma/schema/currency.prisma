@@ -1,6 +1,7 @@
 model Currency {
   id          String   @id @default(uuid())
   name        String
+  code        String   @unique
   symbol      String
   description String?
   createdAt   DateTime @default(now())
@@ -9,4 +10,13 @@ model Currency {
   assets      Asset[]
   liabilities Liability[]
   rules      Rules[]
+  userCurrencies UserCurrency[]
+}
+
+model UserCurrency {
+  id          String   @id @default(uuid())
+  userId      String   @unique
+  currencyId  String
+  user        User     @relation(fields: [userId], references: [id])
+  currency    Currency @relation(fields: [currencyId], references: [id])
 }

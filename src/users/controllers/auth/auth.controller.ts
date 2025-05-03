@@ -1,9 +1,11 @@
-import { BadRequestException, Body, Controller, Post } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Ip, Post } from '@nestjs/common';
 import { CreateUserDto } from '../../dtos/create-user.dto';
 import { FirebaseService } from '../../../firebase/firebase.service';
 import { UserService } from 'src/users/services/user/user.service';
 import { RedisService } from 'src/redis/service/redis/redis.service';
 import { JwtService } from '../../services/jwt/jwt.service';
+import { IpService } from 'src/services/ip/ip.service'; // Assuming you have a service to determine country from IP
+import { CurrencyService } from 'src/services/currency/currency.service';
 
 @Controller('auth')
 export class AuthController {
@@ -12,10 +14,12 @@ export class AuthController {
     private readonly firebase: FirebaseService,
     private readonly redis: RedisService,
     private readonly jwtService: JwtService,
+    private readonly ipService: IpService, // Injecting IP service
+    private readonly currencyService: CurrencyService, // Injecting CurrencyService
   ) {}
 
   @Post('google')
-  async googleLogin(@Body('idToken') idToken: string) {
+  async googleLogin(@Body('idToken') idToken: string,@Ip() ip: string) {
     if (!idToken) {
       throw new BadRequestException('Missing Firebase ID token');
     }
@@ -40,7 +44,13 @@ export class AuthController {
         picture,
       };
       user = await this.userRepo.createUser(createUserDto);
+
+      // Assign default currency based on IP
+      const country = await this.ipService.getCountryFromIp(ip);
+      const currencyCode = this.getCurrencyByCountry(country);
+      await this.currencyService.saveUserCurrency(user.id, currencyCode);
     }
+
     await this.redis.set(`wealth-user:${user.id}`, user, 60 * 60 * 24); // Cache for 1 day
 
     const jwtToken = this.jwtService.createToken({
@@ -57,7 +67,10 @@ export class AuthController {
   }
 
   @Post('phone')
-  async phoneLogin(@Body('idToken') idToken: string) {
+  async phoneLogin(
+    @Body('idToken') idToken: string,
+    @Ip() ip: string,
+  ) {
     if (!idToken) {
       throw new BadRequestException('Missing Firebase ID token');
     }
@@ -82,7 +95,13 @@ export class AuthController {
         name: '',
       };
       user = await this.userRepo.createUser(createUserDto);
+
+      // Assign default currency based on IP
+      const country = await this.ipService.getCountryFromIp(ip);
+      const currencyCode = this.getCurrencyByCountry(country);
+      await this.currencyService.saveUserCurrency(user.id, currencyCode);
     }
+
     await this.redis.set(`wealth-user:${user.id}`, user, 60 * 60 * 24); // Cache for 1 day
 
     const jwtToken = this.jwtService.createToken({
@@ -93,8 +112,18 @@ export class AuthController {
 
     return {
       message: 'Login successful',
-      user,
+      data : user,
       token: jwtToken,
     };
+  }
+
+  private getCurrencyByCountry(country: string): string {
+    if (country === 'India') {
+      return 'INR';
+    } else if (['France', 'Germany', 'Italy', 'Spain'].includes(country)) { // Add more European countries as needed
+      return 'EUR';
+    } else {
+      return 'USD';
+    }
   }
 }

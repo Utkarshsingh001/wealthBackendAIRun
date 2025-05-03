@@ -27,6 +27,25 @@ export class UserService {
     async getUserById(userId: string) {
         return this.prisma.user.findUnique({
             where: { id: userId },
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                phone: true,
+                picture: true,
+                isProfileCompleted: true,
+                currency : {
+                    select: {
+                        currency : {
+                            select: {
+                                id: true,
+                                name: true,
+                                symbol: true,
+                            }
+                        }
+                    },
+                }
+            }
         });
     }
 

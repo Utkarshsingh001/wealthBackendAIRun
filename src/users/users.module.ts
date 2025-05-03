@@ -9,6 +9,9 @@ import { RedisService } from 'src/redis/service/redis/redis.service';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtService } from './services/jwt/jwt.service';
 import { secrets } from 'src/config/secrets';
+import { IpService } from 'src/services/ip/ip.service';
+import { CurrencyService } from 'src/services/currency/currency.service';
+
 
 @Module({
   imports: [
@@ -18,6 +21,6 @@ import { secrets } from 'src/config/secrets';
     }),
   ],
   controllers: [UsersController, AuthController],
-  providers: [UserService, Service, FirebaseService, RedisService, JwtService],
+  providers: [UserService, Service, FirebaseService, RedisService, JwtService, IpService, CurrencyService],
 })
 export class UsersModule {}
