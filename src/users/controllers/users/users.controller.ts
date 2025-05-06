@@ -1,8 +1,7 @@
 import { Controller, Get, Post, Body, BadRequestException, Request, UseGuards, Put, NotFoundException } from '@nestjs/common';
-import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
-import { ProfileCompletionGuard } from '../../guards/jwt-auth.guard';
 import { CreateUserDto } from '../../dtos/create-user.dto';
 import { UserService } from '../../services/user/user.service';
+import { OnlyAuth } from 'src/auth/decorators/only-auth.decorator';
 
 @Controller('users')
 export class UsersController {
@@ -17,7 +16,7 @@ export class UsersController {
   }
 
   @Get('profile')
-  @UseGuards(JwtAuthGuard)
+  @OnlyAuth()
   async getProfile(@Request() req) {
     const userId = req.user.id; // Extracted from validated JWT token
 
@@ -31,7 +30,7 @@ export class UsersController {
   }
 
   @Put('profile')
-  @UseGuards(JwtAuthGuard)
+  @OnlyAuth()
   async updateProfile(@Request() req, @Body() updateData: Partial<CreateUserDto>) {
     const userId = req.user.id; // Extracted from validated JWT token
 

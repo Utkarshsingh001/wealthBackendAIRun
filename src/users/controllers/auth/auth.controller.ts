@@ -3,9 +3,10 @@ import { CreateUserDto } from '../../dtos/create-user.dto';
 import { FirebaseService } from '../../../firebase/firebase.service';
 import { UserService } from 'src/users/services/user/user.service';
 import { RedisService } from 'src/redis/service/redis/redis.service';
-import { JwtService } from '../../services/jwt/jwt.service';
+import {JwtAuthService as JwtService } from '../../../auth/jwt.service';
 import { IpService } from 'src/services/ip/ip.service'; // Assuming you have a service to determine country from IP
 import { CurrencyService } from 'src/services/currency/currency.service';
+import { Public } from 'src/auth/decorators/public.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -19,6 +20,7 @@ export class AuthController {
   ) {}
 
   @Post('google')
+  @Public()
   async googleLogin(@Body('idToken') idToken: string,@Ip() ip: string) {
     if (!idToken) {
       throw new BadRequestException('Missing Firebase ID token');
@@ -68,6 +70,7 @@ export class AuthController {
   }
 
   @Post('phone')
+  @Public()
   async phoneLogin(
     @Body('idToken') idToken: string,
     @Ip() ip: string,
