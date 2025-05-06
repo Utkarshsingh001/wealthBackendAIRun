@@ -42,6 +42,7 @@ export class AuthController {
         email,
         name,
         picture,
+        isEmailVerified: true,
       };
       user = await this.userRepo.createUser(createUserDto);
 
@@ -91,6 +92,7 @@ export class AuthController {
       const createUserDto: CreateUserDto = {
         uid,
         phone: phone_number,
+        isPhoneVerified: true,
         email: '',
         name: '',
       };

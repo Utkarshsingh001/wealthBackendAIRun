@@ -23,4 +23,12 @@ export class CreateUserDto {
   @IsOptional()
   @IsBoolean()
   isProfileCompleted?: boolean = false;
+
+  @IsOptional()
+  @IsBoolean()
+  isEmailVerified?: boolean = false;
+  
+  @IsOptional()
+  @IsBoolean()
+  isPhoneVerified?: boolean = false;
 }

@@ -4,9 +4,13 @@ model User {
   uid       String   @unique
   name      String
   picture   String?
-  phone     String?
+  phone     String? @unique
   isProfileCompleted Boolean @default(false)
   createdAt DateTime @default(now())
+  isGoogleLogin Boolean @default(false)
+  isPhoneLogin Boolean @default(false)
+  isEmailVerified Boolean @default(false)
+  isPhoneVerified Boolean @default(false)
   updatedAt DateTime @updatedAt
   goals     Goals[]
   assetTypes UserAssetType[]
@@ -15,4 +19,7 @@ model User {
   liabilities Liability[]
   rules     Rules[]
   currency UserCurrency?
+  @@index([email], name: "user_email_index")
+  @@index([uid], name: "user_uid_index")
+  @@index([phone], name: "user_phone_index")
 }

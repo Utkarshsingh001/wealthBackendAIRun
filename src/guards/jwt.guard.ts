@@ -1,7 +1,7 @@
 import { Injectable, CanActivate, ExecutionContext, UnauthorizedException, ForbiddenException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { RedisService } from 'src/redis/service/redis/redis.service';
-import { UserService } from '../services/user/user.service';
+import { RedisService } from '../redis/service/redis/redis.service';
+import { UserService } from '../users/services/user/user.service';
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {

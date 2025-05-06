@@ -33,6 +33,8 @@ export class UserService {
                 email: true,
                 phone: true,
                 picture: true,
+                isEmailVerified: true,
+                isPhoneVerified: true,
                 isProfileCompleted: true,
                 currency : {
                     select: {

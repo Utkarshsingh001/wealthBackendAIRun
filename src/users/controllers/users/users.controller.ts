@@ -1,5 +1,6 @@
 import { Controller, Get, Post, Body, BadRequestException, Request, UseGuards, Put, NotFoundException } from '@nestjs/common';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
+import { ProfileCompletionGuard } from '../../guards/jwt-auth.guard';
 import { CreateUserDto } from '../../dtos/create-user.dto';
 import { UserService } from '../../services/user/user.service';
 
@@ -7,7 +8,7 @@ import { UserService } from '../../services/user/user.service';
 export class UsersController {
   constructor(
     private readonly userRepo: UserService,
-  ) {}
+  ) { }
 
   @Get()
   async getUsers() {
@@ -26,7 +27,7 @@ export class UsersController {
       throw new NotFoundException('User not found');
     }
 
-    return { message: 'Profile fetched successfully', data : user };
+    return { message: 'Profile fetched successfully', data: user };
   }
 
   @Put('profile')
@@ -37,7 +38,13 @@ export class UsersController {
     if (!updateData || Object.keys(updateData).length === 0) {
       throw new BadRequestException('No data provided to update');
     }
-
+    if (updateData.email && updateData.name && updateData.phone && updateData.isEmailVerified && updateData.isPhoneVerified) {
+      updateData.isProfileCompleted = true;
+    }
+    else {
+      updateData.isProfileCompleted = false;
+    }
+    console.log('updateData', updateData);
     const updatedUser = await this.userRepo.updateUserProfile(userId, updateData);
 
     return { message: 'Profile updated successfully', data: updatedUser };
