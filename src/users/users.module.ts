@@ -18,5 +18,6 @@ import { AuthModule } from '../auth/auth.module';
   ],
   controllers: [UsersController, AuthController],
   providers: [UserService, Service, FirebaseService, RedisService, IpService, CurrencyService],
+  exports: [UserService]
 })
 export class UsersModule {}

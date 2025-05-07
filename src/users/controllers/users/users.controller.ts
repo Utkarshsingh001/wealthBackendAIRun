@@ -2,11 +2,13 @@ import { Controller, Get, Post, Body, BadRequestException, Request, UseGuards, P
 import { CreateUserDto } from '../../dtos/create-user.dto';
 import { UserService } from '../../services/user/user.service';
 import { OnlyAuth } from 'src/auth/decorators/only-auth.decorator';
+import { RedisService } from 'src/redis/service/redis/redis.service';
 
 @Controller('users')
 export class UsersController {
   constructor(
     private readonly userRepo: UserService,
+    private readonly redisService: RedisService
   ) { }
 
   @Get()
@@ -37,7 +39,7 @@ export class UsersController {
     if (!updateData || Object.keys(updateData).length === 0) {
       throw new BadRequestException('No data provided to update');
     }
-    if (updateData.email && updateData.name && updateData.phone && updateData.isEmailVerified && updateData.isPhoneVerified) {
+    if (updateData.email && updateData.name && updateData.phone) {
       updateData.isProfileCompleted = true;
     }
     else {
@@ -45,6 +47,7 @@ export class UsersController {
     }
     console.log('updateData', updateData);
     const updatedUser = await this.userRepo.updateUserProfile(userId, updateData);
+    await this.redisService.set(`wealth-user:${userId}`, updatedUser, 60 * 60 * 24);
 
     return { message: 'Profile updated successfully', data: updatedUser };
   }
